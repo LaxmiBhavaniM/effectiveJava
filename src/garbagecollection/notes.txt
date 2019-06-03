@@ -1,0 +1,43 @@
+Java Garbage Collector:
+- destroys useless objects.
+- Four ways to make an object eligible for garbage collection,
+  1) objReference = null
+  2) objReference = another object (reassigning)
+  3) making objReference fall out of scope
+        myMethod(){
+          objReference = new object;
+        }
+  4) Island of isolation
+  
+- Two ways to request JVM to run gc,
+  1) System.gc()
+  2) Runtime r = Runtime.getRuntime();                [ factory method returning a singleton ]
+     r.gc()                                           [ internally calls System.gc() ]
+
+- Finalize method: 
+  - GC call objects finalize method before destorying it.
+  - GC can invoke finalize() on an object atmost once.
+  
+  - when programmer invokes finalize method, object doesn't get destroyed.
+  - when GC invokes finalize method, object gets destroyed.
+  
+  - when programmer invokes finalize method, JVM will NOT ignore any uncaught exceptions
+  - when GC invokes finalize method, JVM will ignore any uncaught exceptions
+  
+  Memory Leak: Useless objects that are not eligible for garbage collection
+  
+  ------------------------------------
+  
+  - Strong Reference:
+    Object obj = new Object()
+  
+  - Soft Reference: Object that wont be garbage collected unless JVM absolutely needs it
+    SoftReference<Object> sf = new SoftReference<>(obj);
+    obj = null;
+    
+  - Weak Reference: Objects that are garbage collected eagerly
+    WeakReference<Object> wf  new WeakReference<>(obj);
+    obj = null;
+    
+  - Phantom Reference: Used to perform pre-mortem cleaup actions
+    
